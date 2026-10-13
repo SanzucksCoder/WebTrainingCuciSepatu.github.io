@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TAPAK — Klinik Cuci Sepatu</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#F1EAD9;
+    --cream-2:#E7DFC7;
+    --ink:#1E2532;
+    --ink-2:#313B4E;
+    --stamp:#D1552C;
+    --stamp-dark:#B5451F;
+    --foam:#A9DDC4;
+    --foam-dark:#3F8A70;
+    --grey:#8B8473;
+    --paper-line: rgba(30,37,50,0.14);
+    --radius: 6px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--cream);
+    color:var(--ink);
+    font-family:'Plus Jakarta Sans', sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none !important; transition:none !important;}
+  }
+  h1,h2,h3{
+    font-family:'Anton', sans-serif;
+    font-weight:400;
+    letter-spacing:0.5px;
+    margin:0;
+    text-transform:uppercase;
+  }
+  .mono{
+    font-family:'JetBrains Mono', monospace;
+  }
+  a{color:inherit;}
+  img{max-width:100%;display:block;}
+  .wrap{
+    max-width:1120px;
+    margin:0 auto;
+    padding:0 24px;
+  }
+  .eyebrow{
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    color:var(--stamp-dark);
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .eyebrow::before{
+    content:"";
+    width:22px;height:2px;background:var(--stamp);display:inline-block;
+  }
+
+  /* ---------- NAV ---------- */
+  .nav{
+    position:sticky; top:0; z-index:50;
+    background:rgba(241,234,217,0.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--paper-line);
+  }
+  .nav-inner{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:16px 24px;
+    max-width:1120px; margin:0 auto;
+  }
+  .logo{
+    display:flex; align-items:center; gap:10px;
+    font-family:'Anton', sans-serif;
+    font-size:22px;
+    letter-spacing:1px;
+  }
+  .logo .dot{
+    width:10px;height:10px;border-radius:50%;
+    background:var(--stamp);
+    box-shadow:0 0 0 3px rgba(209,85,44,0.2);
+  }
+  .nav-links{
+    display:flex; gap:28px; list-style:none; margin:0; padding:0;
+    font-size:14px; font-weight:600;
+  }
+  .nav-links a{text-decoration:none; opacity:0.75; transition:opacity .15s;}
+  .nav-links a:hover, .nav-links a:focus-visible{opacity:1;}
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    padding:11px 20px;
+    border-radius:999px;
+    font-weight:700; font-size:14px;
+    text-decoration:none;
+    border:2px solid var(--ink);
+    background:var(--ink); color:var(--cream);
+    cursor:pointer;
+    transition:transform .15s ease, background .15s ease;
+  }
+  .btn:hover{transform:translateY(-2px); background:var(--stamp); border-color:var(--stamp);}
+  .btn:focus-visible, a:focus-visible, button:focus-visible, input:focus-visible{
+    outline:3px solid var(--stamp-dark); outline-offset:2px;
+  }
+  .btn-ghost{
+    background:transparent; color:var(--ink); border-color:var(--ink);
+  }
+  .btn-ghost:hover{background:var(--ink); color:var(--cream);}
+  .btn-sm{padding:9px 16px; font-size:13px;}
+  .nav-cta{display:none;}
+  @media(min-width:720px){ .nav-cta{display:inline-flex;} }
+  .menu-toggle{
+    display:inline-flex; background:none;border:2px solid var(--ink); border-radius:8px;
+    padding:8px 10px; cursor:pointer;
+  }
+  @media(min-width:720px){ .menu-toggle{display:none;} .nav-links{display:flex;} }
+  @media(max-width:719px){
+    .nav-links{
+      display:none; position:absolute; top:100%; left:0; right:0;
+      background:var(--cream); flex-direction:column; padding:18px 24px 26px;
+      border-bottom:1px solid var(--paper-line); gap:16px;
+    }
+    .nav-links.open{display:flex;}
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    padding:64px 0 40px;
+  }
+  .hero-inner{
+    display:grid; grid-template-columns:1fr; gap:44px; align-items:center;
+  }
+  @media(min-width:900px){ .hero-inner{grid-template-columns:1.05fr 0.95fr;} }
+  .hero h1{
+    font-size:clamp(44px, 8vw, 84px);
+    line-height:0.92;
+    margin:14px 0 18px;
+  }
+  .hero h1 span{color:var(--stamp);}
+  .hero p{
+    font-size:17px; line-height:1.6; color:var(--ink-2); max-width:46ch;
+    margin-bottom:26px;
+  }
+  .hero-actions{display:flex; flex-wrap:wrap; gap:14px; margin-bottom:34px;}
+  .stat-row{display:flex; gap:28px; flex-wrap:wrap;}
+  .stat b{
+    font-family:'Anton', sans-serif; font-size:28px; display:block;
+  }
+  .stat span{font-size:12px; color:var(--grey); text-transform:uppercase; letter-spacing:1px;}
+
+  /* compare slider */
+  .compare-card{
+    background:var(--ink); border-radius:18px; padding:16px;
+    position:relative;
+  }
+  .compare-card .tag{
+    position:absolute; top:-12px; left:22px;
+    background:var(--stamp); color:var(--cream);
+    font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:1.5px;
+    padding:6px 12px; border-radius:4px; transform:rotate(-3deg);
+    box-shadow:0 4px 10px rgba(0,0,0,0.25);
+  }
+  .compare{
+    position:relative; width:100%; aspect-ratio:4/3.1;
+    border-radius:10px; overflow:hidden; background:var(--foam);
+  }
+  .compare .layer{
+    position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+    flex-direction:column;
+  }
+  .compare .after{ background:linear-gradient(160deg,#CFF0DF,var(--foam) 60%); }
+  .compare .before{
+    background:linear-gradient(160deg,#CDBFA0,#B7A67E 60%);
+    clip-path:inset(0 calc(100% - var(--pct,50%)) 0 0);
+  }
+  .shoe-svg{width:58%; max-width:230px; filter:none;}
+  .before .shoe-svg{filter:grayscale(0.55) sepia(0.35) brightness(0.86) contrast(0.95);}
+  .speck{position:absolute; border-radius:50%; background:rgba(93,66,26,0.35);}
+  .layer-label{
+    position:absolute; bottom:12px; font-family:'JetBrains Mono',monospace;
+    font-size:11px; letter-spacing:1.5px; text-transform:uppercase;
+    background:rgba(30,37,50,0.75); color:var(--cream); padding:4px 10px; border-radius:4px;
+  }
+  .after .layer-label{right:12px;}
+  .before .layer-label{left:12px;}
+  .compare input[type=range]{
+    position:absolute; inset:0; width:100%; height:100%; margin:0;
+    appearance:none; background:transparent; cursor:ew-resize; z-index:5;
+  }
+  .compare input[type=range]::-webkit-slider-thumb{
+    appearance:none; width:38px; height:38px; border-radius:50%;
+    background:var(--cream); border:3px solid var(--stamp);
+    box-shadow:0 3px 8px rgba(0,0,0,0.35);
+    margin-top:0;
+  }
+  .compare input[type=range]::-moz-range-thumb{
+    width:38px; height:38px; border-radius:50%;
+    background:var(--cream); border:3px solid var(--stamp); box-shadow:0 3px 8px rgba(0,0,0,0.35);
+  }
+  .handle-line{
+    position:absolute; top:0; bottom:0; width:3px; background:var(--cream);
+    left:var(--pct,50%); transform:translateX(-50%); z-index:4; pointer-events:none;
+    box-shadow:0 0 0 1px rgba(0,0,0,0.2);
+  }
+
+  /* ---------- SECTION HEADERS ---------- */
+  section{padding:76px 0;}
+  .sec-head{max-width:640px; margin-bottom:44px;}
+  .sec-head h2{font-size:clamp(30px,5vw,46px); margin-top:12px;}
+  .sec-head p{color:var(--ink-2); font-size:16px; line-height:1.6; margin-top:14px;}
+
+  /* ---------- SERVICES (label tags) ---------- */
+  .services{background:var(--cream-2); border-top:1px solid var(--paper-line); border-bottom:1px solid var(--paper-line);}
+  .service-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:22px;}
+  .tag-card{
+    background:var(--cream);
+    border:1.5px dashed var(--grey);
+    border-radius:8px;
+    padding:26px 22px 22px;
+    position:relative;
+  }
+  .tag-card::before{
+    content:"";
+    position:absolute; top:22px; left:-9px;
+    width:16px; height:16px; border-radius:50%;
+    background:var(--cream-2); border:1.5px dashed var(--grey);
+  }
+  .tag-card .price{
+    font-family:'JetBrains Mono',monospace; font-weight:700; color:var(--stamp-dark);
+    font-size:15px; margin-top:12px; display:block;
+  }
+  .tag-card h3{font-size:20px; margin-top:6px;}
+  .tag-card p{font-size:14px; color:var(--ink-2); line-height:1.55; margin-top:10px;}
+  .tag-card .icon{
+    width:40px;height:40px;border-radius:8px;background:var(--ink);color:var(--foam);
+    display:flex;align-items:center;justify-content:center; font-size:18px;
+  }
+
+  /* ---------- PROCESS ---------- */
+  .process-strip{
+    display:flex; flex-wrap:wrap; gap:0; border:1px solid var(--paper-line); border-radius:12px; overflow:hidden;
+  }
+  .process-step{
+    flex:1 1 200px; padding:24px 22px; border-right:1px solid var(--paper-line);
+  }
+  .process-step:last-child{border-right:none;}
+  .process-step .mono{color:var(--stamp-dark); font-size:12px;}
+  .process-step h3{font-size:17px; margin-top:8px; text-transform:none; font-family:'Plus Jakarta Sans'; font-weight:800;}
+  .process-step p{font-size:13.5px; color:var(--ink-2); margin-top:8px; line-height:1.5;}
+
+  /* ---------- TEAM (id badges) ---------- */
+  .team-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:26px;}
+  .badge{
+    background:var(--ink); color:var(--cream);
+    border-radius:14px; padding:22px; position:relative;
+    box-shadow:0 10px 24px rgba(30,37,50,0.16);
+  }
+  .badge::before{
+    content:""; position:absolute; left:50%; top:-9px; transform:translateX(-50%);
+    width:52px; height:18px; border-radius:0 0 10px 10px; background:var(--grey);
+  }
+  .badge-top{display:flex; align-items:center; gap:14px;}
+  .avatar{
+    width:56px;height:56px;border-radius:50%;
+    background:var(--foam); color:var(--ink);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Anton',sans-serif; font-size:20px; flex-shrink:0;
+  }
+  .badge h3{color:var(--cream); font-size:19px; font-family:'Plus Jakarta Sans'; font-weight:800; text-transform:none;}
+  .badge .role{font-family:'JetBrains Mono',monospace; font-size:11.5px; color:var(--foam); letter-spacing:0.5px; margin-top:3px;}
+  .badge .divider{border-top:1px dashed rgba(241,234,217,0.28); margin:16px 0;}
+  .badge .meta{display:flex; justify-content:space-between; font-size:12.5px; color:rgba(241,234,217,0.75); margin-bottom:14px;}
+  .badge .meta b{color:var(--cream); display:block; font-size:15px; font-family:'JetBrains Mono',monospace;}
+  .wa-btn{
+    display:flex; align-items:center; justify-content:center; gap:8px;
+    width:100%; background:#2FAE60; color:#fff; border:none;
+    padding:12px; border-radius:8px; font-weight:700; font-size:13.5px;
+    text-decoration:none; transition:background .15s ease, transform .15s ease;
+  }
+  .wa-btn:hover{background:#279452; transform:translateY(-1px);}
+  .wa-btn svg{width:16px;height:16px;flex-shrink:0;}
+
+  /* ---------- DOCUMENTATION GALLERY ---------- */
+  .gallery{background:var(--cream-2); border-top:1px solid var(--paper-line); border-bottom:1px solid var(--paper-line);}
+  .gallery-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:26px;}
+  .doc-card{background:var(--ink); border-radius:14px; padding:14px;}
+  .doc-card .doc-head{display:flex; justify-content:space-between; align-items:center; padding:2px 6px 12px;}
+  .doc-card .doc-head span{font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--foam); letter-spacing:1px;}
+  .doc-card .doc-head h3{color:var(--cream); font-size:16px; font-family:'Plus Jakarta Sans'; font-weight:800; text-transform:none;}
+  .doc-card .compare{aspect-ratio:4/3;}
+
+  /* ---------- TESTIMONI ---------- */
+  .testi-row{display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:22px;}
+  .testi{
+    background:var(--cream-2); border-radius:10px; padding:24px;
+    border-left:4px solid var(--stamp);
+  }
+  .testi p{font-size:14.5px; line-height:1.6; color:var(--ink-2); font-style:italic;}
+  .testi .who{margin-top:14px; font-weight:700; font-size:13.5px;}
+  .testi .who span{color:var(--grey); font-weight:500; font-family:'JetBrains Mono',monospace; font-size:11.5px; display:block; margin-top:2px;}
+
+  /* ---------- CTA / FOOTER ---------- */
+  .cta-band{
+    background:var(--ink); color:var(--cream); border-radius:20px;
+    padding:52px 32px; text-align:center; margin:0 auto;
+  }
+  .cta-band h2{color:var(--cream); font-size:clamp(28px,5vw,44px);}
+  .cta-band p{color:rgba(241,234,217,0.75); margin:14px auto 26px; max-width:50ch;}
+  .cta-band .btn{background:var(--stamp); border-color:var(--stamp);}
+  .cta-band .btn:hover{background:var(--foam); border-color:var(--foam); color:var(--ink);}
+
+  footer{padding:56px 0 40px; font-size:13.5px; color:var(--ink-2);}
+  .footer-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:28px; margin-bottom:36px;}
+  .footer-grid h4{font-family:'JetBrains Mono',monospace; font-size:11.5px; letter-spacing:1.5px; text-transform:uppercase; color:var(--grey); margin-bottom:12px;}
+  .footer-grid a{display:block; text-decoration:none; opacity:0.85; margin-bottom:8px;}
+  .footer-grid a:hover{opacity:1; color:var(--stamp-dark);}
+  .footer-bottom{border-top:1px solid var(--paper-line); padding-top:20px; display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <div class="logo"><span class="dot"></span>TAPAK</div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#layanan">Layanan</a></li>
+      <li><a href="#tim">Tim Kami</a></li>
+      <li><a href="#dokumentasi">Dokumentasi</a></li>
+      <li><a href="#testimoni">Testimoni</a></li>
+    </ul>
+    <div style="display:flex; align-items:center; gap:10px;">
+      <a class="btn btn-sm nav-cta" href="https://wa.me/?text=Halo%20TAPAK%2C%20saya%20mau%20cuci%20sepatu" target="_blank" rel="noopener">Pesan via WA</a>
+      <button class="menu-toggle" id="menuToggle" aria-label="Buka menu" aria-expanded="false">☰</button>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap hero-inner">
+    <div>
+      <p class="eyebrow">Klinik cuci sepatu — Bandung</p>
+      <h1>Sepatu kotor,<br>urusan <span>kami</span>.</h1>
+      <p>Cuci, deep clean, unyellowing, sampai repaint — dikerjakan langsung oleh tim spesialis dengan dokumentasi before/after untuk setiap pasang sepatu yang masuk.</p>
+      <div class="hero-actions">
+        <a class="btn" href="https://wa.me/?text=Halo%20TAPAK%2C%20saya%20mau%20cuci%20sepatu" target="_blank" rel="noopener">Pesan Sekarang via WA</a>
+        <a class="btn btn-ghost" href="#layanan">Lihat Layanan</a>
+      </div>
+      <div class="stat-row">
+        <div class="stat"><b>4.900+</b><span>Pasang dicuci</span></div>
+        <div class="stat"><b>4.9/5</b><span>Rating pelanggan</span></div>
+        <div class="stat"><b>±90 mnt</b><span>Estimasi reguler</span></div>
+      </div>
+    </div>
+
+    <div class="compare-card">
+      <span class="tag">GESER UNTUK LIHAT HASIL</span>
+      <div class="compare" id="heroCompare">
+        <div class="layer after">
+          <svg class="shoe-svg" viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg">
+            <path d="M10 90 C10 70 30 60 55 58 C65 45 85 35 105 33 C120 31 140 34 155 44 L185 60 C193 64 193 78 185 84 L180 90 Z" fill="#F1EAD9" stroke="#1E2532" stroke-width="3"/>
+            <path d="M55 58 C75 62 100 62 120 55" fill="none" stroke="#3F8A70" stroke-width="4" stroke-linecap="round"/>
+            <path d="M10 90 L190 90" stroke="#1E2532" stroke-width="6" stroke-linecap="round"/>
+            <circle cx="95" cy="46" r="3" fill="#D1552C"/>
+            <circle cx="110" cy="43" r="3" fill="#D1552C"/>
+            <circle cx="125" cy="42" r="3" fill="#D1552C"/>
+          </svg>
+          <span class="layer-label">Sesudah</span>
+        </div>
+        <div class="layer before">
+          <svg class="shoe-svg" viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg">
+            <path d="M10 90 C10 70 30 60 55 58 C65 45 85 35 105 33 C120 31 140 34 155 44 L185 60 C193 64 193 78 185 84 L180 90 Z" fill="#F1EAD9" stroke="#1E2532" stroke-width="3"/>
+            <path d="M55 58 C75 62 100 62 120 55" fill="none" stroke="#3F8A70" stroke-width="4" stroke-linecap="round"/>
+            <path d="M10 90 L190 90" stroke="#1E2532" stroke-width="6" stroke-linecap="round"/>
+            <circle cx="95" cy="46" r="3" fill="#D1552C"/>
+            <circle cx="110" cy="43" r="3" fill="#D1552C"/>
+            <circle cx="125" cy="42" r="3" fill="#D1552C"/>
+          </svg>
+          <span class="speck" style="width:14px;height:14px;top:40%;left:30%;"></span>
+          <span class="speck" style="width:9px;height:9px;top:55%;left:60%;"></span>
+          <span class="speck" style="width:11px;height:11px;top:65%;left:45%;"></span>
+          <span class="speck" style="width:7px;height:7px;top:35%;left:70%;"></span>
+          <span class="layer-label">Sebelum</span>
+        </div>
+        <div class="handle-line" id="heroLine"></div>
+        <input type="range" min="0" max="100" value="50" id="heroSlider" aria-label="Geser untuk bandingkan sebelum dan sesudah">
+      </div>
+    </div>
+  </div>
+</header>
+
+<section class="services" id="layanan">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">Daftar layanan</p>
+      <h2>Pilih sesuai kondisi sepatu</h2>
+      <p>Setiap layanan dikerjakan manual, bukan mesin cuci — supaya bahan kanvas, kulit, dan suede tetap aman.</p>
+    </div>
+    <div class="service-grid">
+      <div class="tag-card">
+        <div class="icon">①</div>
+        <h3>Cuci Reguler</h3>
+        <span class="price">Rp35.000</span>
+        <p>Cuci luar-dalam, sikat manual, dan pengeringan alami. Cocok untuk perawatan rutin.</p>
+      </div>
+      <div class="tag-card">
+        <div class="icon">②</div>
+        <h3>Deep Clean</h3>
+        <span class="price">Rp55.000</span>
+        <p>Untuk sepatu yang lama tidak dicuci — noda membandel, bau, dan kotoran di sela jahitan.</p>
+      </div>
+      <div class="tag-card">
+        <div class="icon">③</div>
+        <h3>Unyellowing</h3>
+        <span class="price">Rp45.000</span>
+        <p>Mengembalikan warna putih pada midsole yang menguning karena oksidasi.</p>
+      </div>
+      <div class="tag-card">
+        <div class="icon">④</div>
+        <h3>Repaint &amp; Repair</h3>
+        <span class="price">Mulai Rp75.000</span>
+        <p>Sol lepas, warna pudar, atau ingin ganti warna — tim repaint kami yang tangani.</p>
+      </div>
+      <div class="tag-card">
+        <div class="icon">⑤</div>
+        <h3>Suede &amp; Kulit</h3>
+        <span class="price">Rp60.000</span>
+        <p>Penanganan khusus untuk bahan sensitif dengan produk perawatan yang sesuai.</p>
+      </div>
+      <div class="tag-card">
+        <div class="icon">⑥</div>
+        <h3>Antar-Jemput</h3>
+        <span class="price">Gratis area Bandung</span>
+        <p>Kurir kami jemput sepatu dari lokasimu dan antar kembali setelah selesai dicuci.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">Alur pengerjaan</p>
+      <h2>Dari kotor sampai kirim balik</h2>
+    </div>
+    <div class="process-strip">
+      <div class="process-step">
+        <span class="mono">01 · CEK</span>
+        <h3>Inspeksi &amp; foto awal</h3>
+        <p>Sepatu difoto dan dicek kondisi bahan sebelum proses dimulai.</p>
+      </div>
+      <div class="process-step">
+        <span class="mono">02 · CUCI</span>
+        <h3>Pencucian manual</h3>
+        <p>Disikat sesuai jenis bahan, dengan produk khusus per kategori.</p>
+      </div>
+      <div class="process-step">
+        <span class="mono">03 · KERING</span>
+        <h3>Pengeringan alami</h3>
+        <p>Tanpa mesin pengering panas, agar bentuk dan lem sepatu tetap aman.</p>
+      </div>
+      <div class="process-step">
+        <span class="mono">04 · QC</span>
+        <h3>Cek kualitas &amp; foto akhir</h3>
+        <p>Difoto lagi untuk dokumentasi hasil, dikirim ke pelanggan via WA.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="tim">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">Kenali tukang cucimu</p>
+      <h2>Tim di balik sepatu bersihmu</h2>
+      <p>Tiap pasang sepatu ditangani orang, bukan mesin. Hubungi langsung anggota tim lewat WhatsApp masing-masing.</p>
+    </div>
+    <div class="team-grid">
+
+      <div class="badge">
+        <div class="badge-top">
+          <div class="avatar">RS</div>
+          <div>
+            <h3>Rakha</h3>
+            <div class="role">CUCI REGULER &amp; DEEP CLEAN</div>
+          </div>
+        </div>
+        <div class="divider"></div>
+        <div class="meta">
+          <div>Pengalaman<b>3 Tahun</b></div>
+          <div>Rating<b>4.9 ★</b></div>
+          <div>Sepatu/bln<b>210+</b></div>
+        </div>
+        <a class="wa-btn" href="https://wa.me/?text=Halo%20Rangga%2C%20saya%20mau%20tanya%20soal%20cuci%20sepatu" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.7-.9-2-1-.3-.1-.5-.1-.7.1s-.8 1-.9 1.2c-.2.2-.3.2-.6.1-.3-.1-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6l.4-.5c.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5-.1-.1-.7-1.7-1-2.3-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4s1 2.8 1.2 3c.1.2 2 3.1 4.9 4.3.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.5-.1 1.7-.7 2-1.4.2-.7.2-1.2.1-1.4-.1-.1-.3-.2-.6-.3z"/><path d="M12 2C6.5 2 2 6.5 2 12c0 1.9.5 3.7 1.5 5.3L2 22l4.9-1.3c1.5.8 3.2 1.3 5.1 1.3 5.5 0 10-4.5 10-10S17.5 2 12 2zm0 18.3c-1.7 0-3.3-.5-4.7-1.3l-.3-.2-3 .8.8-2.9-.2-.3C3.8 15 3.2 13.5 3.2 12 3.2 7.1 7.1 3.2 12 3.2S20.8 7.1 20.8 12 16.9 20.3 12 20.3z"/></svg>
+          WA Rangga
+        </a>
+      </div>
+
+      <div class="badge">
+        <div class="badge-top">
+          <div class="avatar">DA</div>
+          <div>
+            <h3>Ade</h3>
+            <div class="role">UNYELLOWING &amp; SUEDE</div>
+          </div>
+        </div>
+        <div class="divider"></div>
+        <div class="meta">
+          <div>Pengalaman<b>4 Tahun</b></div>
+          <div>Rating<b>5.0 ★</b></div>
+          <div>Sepatu/bln<b>180+</b></div>
+        </div>
+        <a class="wa-btn" href="https://wa.me/?text=Halo%20Dewi%2C%20saya%20mau%20tanya%20soal%20unyellowing%20sepatu" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.7-.9-2-1-.3-.1-.5-.1-.7.1s-.8 1-.9 1.2c-.2.2-.3.2-.6.1-.3-.1-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6l.4-.5c.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5-.1-.1-.7-1.7-1-2.3-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4s1 2.8 1.2 3c.1.2 2 3.1 4.9 4.3.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.5-.1 1.7-.7 2-1.4.2-.7.2-1.2.1-1.4-.1-.1-.3-.2-.6-.3z"/><path d="M12 2C6.5 2 2 6.5 2 12c0 1.9.5 3.7 1.5 5.3L2 22l4.9-1.3c1.5.8 3.2 1.3 5.1 1.3 5.5 0 10-4.5 10-10S17.5 2 12 2zm0 18.3c-1.7 0-3.3-.5-4.7-1.3l-.3-.2-3 .8.8-2.9-.2-.3C3.8 15 3.2 13.5 3.2 12 3.2 7.1 7.1 3.2 12 3.2S20.8 7.1 20.8 12 16.9 20.3 12 20.3z"/></svg>
+          WA Dewi
+        </a>
+      </div>
+
+      <div class="badge">
+        <div class="badge-top">
+          <div class="avatar">FN</div>
+          <div>
+            <h3>Zhafar</h3>
+            <div class="role">REPAINT &amp; REPAIR</div>
+          </div>
+        </div>
+        <div class="divider"></div>
+        <div class="meta">
+          <div>Pengalaman<b>5 Tahun</b></div>
+          <div>Rating<b>4.8 ★</b></div>
+          <div>Sepatu/bln<b>120+</b></div>
+        </div>
+        <a class="wa-btn" href="https://wa.me/?text=Halo%20Fajar%2C%20saya%20mau%20tanya%20soal%20repaint%20sepatu" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.7-.9-2-1-.3-.1-.5-.1-.7.1s-.8 1-.9 1.2c-.2.2-.3.2-.6.1-.3-.1-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6l.4-.5c.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5-.1-.1-.7-1.7-1-2.3-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4s1 2.8 1.2 3c.1.2 2 3.1 4.9 4.3.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.5-.1 1.7-.7 2-1.4.2-.7.2-1.2.1-1.4-.1-.1-.3-.2-.6-.3z"/><path d="M12 2C6.5 2 2 6.5 2 12c0 1.9.5 3.7 1.5 5.3L2 22l4.9-1.3c1.5.8 3.2 1.3 5.1 1.3 5.5 0 10-4.5 10-10S17.5 2 12 2zm0 18.3c-1.7 0-3.3-.5-4.7-1.3l-.3-.2-3 .8.8-2.9-.2-.3C3.8 15 3.2 13.5 3.2 12 3.2 7.1 7.1 3.2 12 3.2S20.8 7.1 20.8 12 16.9 20.3 12 20.3z"/></svg>
+          WA Fajar
+        </a>
+      </div>
+
+      <div class="badge">
+        <div class="badge-top">
+          <div class="avatar">SM</div>
+          <div>
+            <h3>Dzikri</h3>
+            <div class="role">QUALITY CONTROL</div>
+          </div>
+        </div>
+        <div class="divider"></div>
+        <div class="meta">
+          <div>Pengalaman<b>3 Tahun</b></div>
+          <div>Rating<b>5.0 ★</b></div>
+          <div>Sepatu/bln<b>250+</b></div>
+        </div>
+        <a class="wa-btn" href="https://wa.me/?text=Halo%20Siti%2C%20saya%20mau%20tanya%20soal%20status%20cucian%20sepatu" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.7-.9-2-1-.3-.1-.5-.1-.7.1s-.8 1-.9 1.2c-.2.2-.3.2-.6.1-.3-.1-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6l.4-.5c.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5-.1-.1-.7-1.7-1-2.3-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4s1 2.8 1.2 3c.1.2 2 3.1 4.9 4.3.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.5-.1 1.7-.7 2-1.4.2-.7.2-1.2.1-1.4-.1-.1-.3-.2-.6-.3z"/><path d="M12 2C6.5 2 2 6.5 2 12c0 1.9.5 3.7 1.5 5.3L2 22l4.9-1.3c1.5.8 3.2 1.3 5.1 1.3 5.5 0 10-4.5 10-10S17.5 2 12 2zm0 18.3c-1.7 0-3.3-.5-4.7-1.3l-.3-.2-3 .8.8-2.9-.2-.3C3.8 15 3.2 13.5 3.2 12 3.2 7.1 7.1 3.2 12 3.2S20.8 7.1 20.8 12 16.9 20.3 12 20.3z"/></svg>
+          WA Siti
+        </a>
+      </div>
+
+      <div class="badge">
+        <div class="badge-top">
+          <div class="avatar">YP</div>
+          <div>
+            <h3>Udin</h3>
+            <div class="role">KURIR ANTAR-JEMPUT</div>
+          </div>
+        </div>
+        <div class="divider"></div>
+        <div class="meta">
+          <div>Pengalaman<b>2 Tahun</b></div>
+          <div>Rating<b>4.9 ★</b></div>
+          <div>Antar/bln<b>300+</b></div>
+        </div>
+        <a class="wa-btn" href="https://wa.me/?text=Halo%20Yusuf%2C%20saya%20mau%20request%20antar-jemput%20sepatu" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.7-.9-2-1-.3-.1-.5-.1-.7.1s-.8 1-.9 1.2c-.2.2-.3.2-.6.1-.3-.1-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6l.4-.5c.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5-.1-.1-.7-1.7-1-2.3-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4s1 2.8 1.2 3c.1.2 2 3.1 4.9 4.3.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.5-.1 1.7-.7 2-1.4.2-.7.2-1.2.1-1.4-.1-.1-.3-.2-.6-.3z"/><path d="M12 2C6.5 2 2 6.5 2 12c0 1.9.5 3.7 1.5 5.3L2 22l4.9-1.3c1.5.8 3.2 1.3 5.1 1.3 5.5 0 10-4.5 10-10S17.5 2 12 2zm0 18.3c-1.7 0-3.3-.5-4.7-1.3l-.3-.2-3 .8.8-2.9-.2-.3C3.8 15 3.2 13.5 3.2 12 3.2 7.1 7.1 3.2 12 3.2S20.8 7.1 20.8 12 16.9 20.3 12 20.3z"/></svg>
+          WA Yusuf
+        </a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="gallery" id="dokumentasi">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">Bukti kerja, bukan janji</p>
+      <h2>Dokumentasi sebelum &amp; sesudah</h2>
+      <p>Contoh hasil cucian — geser tiap kartu untuk melihat perbandingannya.</p>
+    </div>
+    <div class="gallery-grid" id="galleryGrid">
+
+      <div class="doc-card">
+        <div class="doc-head"><h3>Sneakers Kanvas Putih</h3><span class="mono">DEEP CLEAN</span></div>
+        <div class="compare doc-compare">
+          <div class="layer after">
+            <svg class="shoe-svg" viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg"><path d="M10 90 C10 70 30 60 55 58 C65 45 85 35 105 33 C120 31 140 34 155 44 L185 60 C193 64 193 78 185 84 L180 90 Z" fill="#F1EAD9" stroke="#1E2532" stroke-width="3"/><path d="M55 58 C75 62 100 62 120 55" fill="none" stroke="#3F8A70" stroke-width="4" stroke-linecap="round"/><path d="M10 90 L190 90" stroke="#1E2532" stroke-width="6" stroke-linecap="round"/></svg>
+            <span class="layer-label">Sesudah</span>
+          </div>
+          <div class="layer before">
+            <svg class="shoe-svg" viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg"><path d="M10 90 C10 70 30 60 55 58 C65 45 85 35 105 33 C120 31 140 34 155 44 L185 60 C193 64 193 78 185 84 L180 90 Z" fill="#F1EAD9" stroke="#1E2532" stroke-width="3"/><path d="M55 58 C75 62 100 62 120 55" fill="none" stroke="#3F8A70" stroke-width="4" stroke-linecap="round"/><path d="M10 90 L190 90" stroke="#1E2532" stroke-width="6" stroke-linecap="round"/></svg>
+            <span class="speck" style="width:12px;height:12px;top:45%;left:35%;"></span>
+            <span class="speck" style="width:8px;height:8px;top:60%;left:55%;"></span>
+            <span class="speck" style="width:10px;height:10px;top:30%;left:65%;"></span>
+            <span class="layer-label">Sebelum</span>
+          </div>
+          <div class="handle-line"></div>
+          <input type="range" min="0" max="100" value="50" class="cmp-slider" aria-label="Bandingkan sebelum dan sesudah — sneakers kanvas putih">
+        </div>
+      </div>
+
+      <div class="doc-card">
+        <div class="doc-head"><h3>Boots Suede Cokelat</h3><span class="mono">SUEDE CARE</span></div>
+        <div class="compare doc-compare">
+          <div class="layer after" style="background:linear-gradient(160deg,#E9DDC4,#D9C79E 60%);">
+            <svg class="shoe-svg" viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg"><path d="M14 92 C14 55 40 30 70 28 L150 28 C168 28 180 42 180 60 L180 92 Z" fill="#B08655" stroke="#1E2532" stroke-width="3"/><path d="M14 92 L186 92" stroke="#1E2532" stroke-width="6" stroke-linecap="round"/></svg>
+            <span class="layer-label">Sesudah</span>
+          </div>
+          <div class="layer before" style="background:linear-gradient(160deg,#C9B48C,#A78F63 60%);">
+            <svg class="shoe-svg" viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg"><path d="M14 92 C14 55 40 30 70 28 L150 28 C168 28 180 42 180 60 L180 92 Z" fill="#8C6A3F" stroke="#1E2532" stroke-width="3"/><path d="M14 92 L186 92" stroke="#1E2532" stroke-width="6" stroke-linecap="round"/></svg>
+            <span class="speck" style="width:13px;height:13px;top:50%;left:40%;background:rgba(50,35,10,0.4);"></span>
+            <span class="speck" style="width:9px;height:9px;top:65%;left:60%;background:rgba(50,35,10,0.4);"></span>
+            <span class="layer-label">Sebelum</span>
+          </div>
+          <div class="handle-line"></div>
+          <input type="range" min="0" max="100" value="50" class="cmp-slider" aria-label="Bandingkan sebelum dan sesudah — boots suede cokelat">
+        </div>
+      </div>
+
+      <div class="doc-card">
+        <div class="doc-head"><h3>Sol Midsole Menguning</h3><span class="mono">UNYELLOWING</span></div>
+        <div class="compare doc-compare">
+          <div class="layer after">
+            <svg class="shoe-svg" viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg"><path d="M10 90 C10 70 30 60 55 58 C65 45 85 35 105 33 C120 31 140 34 155 44 L185 60 C193 64 193 78 185 84 L180 90 Z" fill="#F1EAD9" stroke="#1E2532" stroke-width="3"/><path d="M10 90 L190 90" stroke="#1E2532" stroke-width="8" stroke-linecap="round"/></svg>
+            <span class="layer-label">Sesudah</span>
+          </div>
+          <div class="layer before">
+            <svg class="shoe-svg" viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg"><path d="M10 90 C10 70 30 60 55 58 C65 45 85 35 105 33 C120 31 140 34 155 44 L185 60 C193 64 193 78 185 84 L180 90 Z" fill="#F1EAD9" stroke="#1E2532" stroke-width="3"/><path d="M10 90 L190 90" stroke="#C7A64A" stroke-width="8" stroke-linecap="round"/></svg>
+            <span class="layer-label">Sebelum</span>
+          </div>
+          <div class="handle-line"></div>
+          <input type="range" min="0" max="100" value="50" class="cmp-slider" aria-label="Bandingkan sebelum dan sesudah — unyellowing midsole">
+        </div>
+      </div>
+
+      <div class="doc-card">
+        <div class="doc-head"><h3>Repaint Aksen Warna</h3><span class="mono">REPAINT</span></div>
+        <div class="compare doc-compare">
+          <div class="layer after">
+            <svg class="shoe-svg" viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg"><path d="M10 90 C10 70 30 60 55 58 C65 45 85 35 105 33 C120 31 140 34 155 44 L185 60 C193 64 193 78 185 84 L180 90 Z" fill="#F1EAD9" stroke="#1E2532" stroke-width="3"/><path d="M55 58 C75 62 100 62 120 55" fill="none" stroke="#D1552C" stroke-width="5" stroke-linecap="round"/><path d="M10 90 L190 90" stroke="#1E2532" stroke-width="6" stroke-linecap="round"/></svg>
+            <span class="layer-label">Sesudah</span>
+          </div>
+          <div class="layer before">
+            <svg class="shoe-svg" viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg"><path d="M10 90 C10 70 30 60 55 58 C65 45 85 35 105 33 C120 31 140 34 155 44 L185 60 C193 64 193 78 185 84 L180 90 Z" fill="#F1EAD9" stroke="#1E2532" stroke-width="3"/><path d="M55 58 C75 62 100 62 120 55" fill="none" stroke="#8B8473" stroke-width="5" stroke-linecap="round" stroke-dasharray="4 4"/><path d="M10 90 L190 90" stroke="#1E2532" stroke-width="6" stroke-linecap="round"/></svg>
+            <span class="layer-label">Sebelum</span>
+          </div>
+          <div class="handle-line"></div>
+          <input type="range" min="0" max="100" value="50" class="cmp-slider" aria-label="Bandingkan sebelum dan sesudah — repaint aksen warna">
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="testimoni">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">Kata pelanggan</p>
+      <h2>Dipercaya pemilik sneakers Bandung</h2>
+    </div>
+    <div class="testi-row">
+      <div class="testi">
+        <p>"Sepatu suede kesayangan sempat kena lumpur, dikira udah rusak. Ternyata bisa balik bersih lagi, hasilnya rapi."</p>
+        <div class="who">Alya R.<span>Pelanggan Deep Clean</span></div>
+      </div>
+      <div class="testi">
+        <p>"Midsole yang udah kuning banget bisa putih lagi. Prosesnya dikirim foto tiap tahap jadi tenang nunggunya."</p>
+        <div class="who">Bimo S.<span>Pelanggan Unyellowing</span></div>
+      </div>
+      <div class="testi">
+        <p>"Kurirnya on time, komunikasi jelas via WA, dan sepatu balik dalam kondisi lebih rapi dari ekspektasi."</p>
+        <div class="who">Cinta W.<span>Pelanggan Antar-Jemput</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="cta-band">
+      <p class="eyebrow" style="justify-content:center; color:var(--foam);">Siap dicuci?</p>
+      <h2>Chat tim TAPAK sekarang</h2>
+      <p>Kirim foto sepatumu via WhatsApp, tim akan bantu tentukan layanan yang paling pas.</p>
+      <a class="btn" href="https://wa.me/?text=Halo%20TAPAK%2C%20saya%20mau%20cuci%20sepatu" target="_blank" rel="noopener">Mulai Chat WhatsApp</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <h4>TAPAK</h4>
+        <p style="line-height:1.6; opacity:0.85;">Klinik cuci sepatu manual di Bandung. Buka Senin–Minggu, 09.00–20.00 WIB.</p>
+      </div>
+      <div>
+        <h4>Navigasi</h4>
+        <a href="#layanan">Layanan</a>
+        <a href="#tim">Tim Kami</a>
+        <a href="#dokumentasi">Dokumentasi</a>
+        <a href="#testimoni">Testimoni</a>
+      </div>
+      <div>
+        <h4>Kontak</h4>
+        <a href="https://wa.me/6281234567890" target="_blank" rel="noopener">WA: 0812-3456-7890</a>
+        <a href="#">Bandung, Jawa Barat</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 TAPAK Klinik Cuci Sepatu.</span>
+      <span class="mono">Dicuci dengan tangan, bukan mesin.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // mobile nav toggle
+  const menuToggle = document.getElementById('menuToggle');
+  const navLinks = document.getElementById('navLinks');
+  menuToggle.addEventListener('click', () => {
+    const open = navLinks.classList.toggle('open');
+    menuToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    navLinks.classList.remove('open');
+    menuToggle.setAttribute('aria-expanded', 'false');
+  }));
+
+  // before/after sliders
+  function bindCompare(root){
+    const slider = root.querySelector('input[type=range]');
+    const line = root.querySelector('.handle-line');
+    if(!slider) return;
+    const update = () => {
+      root.style.setProperty('--pct', slider.value + '%');
+      if(line) line.style.setProperty('--pct', slider.value + '%');
+    };
+    slider.addEventListener('input', update);
+    update();
+  }
+  bindCompare(document.getElementById('heroCompare'));
+  document.querySelectorAll('.doc-compare').forEach(bindCompare);
+</script>
+
+</body>
+</html>
